@@ -18,7 +18,7 @@ jobs:
     
     - name: Ensure GitHub NuGet Source
       run: |
-        dotnet nuget add source ${{ env.NUGET_URL }} \
+        dotnet nuget add source ${{ secrets.NUGET_URL }} \
           -n github \
           -u ${{ secrets.REGISTRY_USER }} \
           -p ${{ secrets.REGISTRY_TOKEN }} \
