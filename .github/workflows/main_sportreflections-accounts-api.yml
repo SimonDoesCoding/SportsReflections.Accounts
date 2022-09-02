@@ -16,21 +16,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    -
-        name: Prep
-        run: |
-          echo "::set-env name=BUILD_VER::2.3.$GITHUB_RUN_NUMBER"
-          echo "::set-env name=CONFIG::Release"
-          echo "::set-env name=NUGET_URL::https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-          echo "::set-env name=Test::true"
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-        source-url: ${{ env.NUGET_URL }}
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.TOKEN }}
+    - name: Ensure GitHub NuGet Source
+      run: |
+        dotnet nuget add source ${{ env.NUGET_URL }} \
+          -n github \
+          -u ${{ secrets.REGISTRY_USER }} \
+          -p ${{ secrets.REGISTRY_TOKEN }} \
+          --store-password-in-clear-text
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
