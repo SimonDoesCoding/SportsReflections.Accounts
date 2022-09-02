@@ -16,6 +16,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    -
+        name: Prep
+        run: |
+          echo "::set-env name=BUILD_VER::2.3.$GITHUB_RUN_NUMBER"
+          echo "::set-env name=CONFIG::Release"
+          echo "::set-env name=NUGET_URL::https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          echo "::set-env name=Test::true"
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
