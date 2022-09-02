@@ -16,6 +16,13 @@ namespace SportReflections.Accounts.Api.Controllers
         }
 
         [HttpGet]
+        [Route("/ping")]
+        public DateTime Ping()
+        {
+            return DateTime.Now;
+        }
+
+        [HttpGet]
         public async Task<IEnumerable<Account>> Get()
         {
             var accounts = await _accountService.Get();
