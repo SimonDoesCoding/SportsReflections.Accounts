@@ -1,10 +1,13 @@
+WORKDIR /src
+COPY ["nuget.config", ""]
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
-WORKDIR /
+WORKDIR /src
 COPY . .
 RUN dotnet restore
-RUN dotnet publish -o /app/published-app
+RUN dotnet publish -o /src/published-app
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as runtime
 WORKDIR /
-COPY --from=build /published-app /
-ENTRYPOINT [ "dotnet", "/app/SportReflections.Accounts.Api.dll" ]
+COPY --from=build /src/published-app /
+ENTRYPOINT [ "dotnet", "/src/SportReflections.Accounts.Api.dll" ]
