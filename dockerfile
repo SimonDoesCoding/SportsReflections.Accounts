@@ -1,8 +1,8 @@
-WORKDIR /src
-COPY ["nuget.config", ""]
+
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
 WORKDIR /src
+COPY ["nuget.config", ""]
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -o /src/published-app
